@@ -1,0 +1,12 @@
+# Service for MySQL Database (optional, for external access)
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-flask-app-service
+spec:
+  selector:
+    app: my-flask-app
+  ports:
+  - protocol: TCP
+    port: 5000
+    targetPort: 5000

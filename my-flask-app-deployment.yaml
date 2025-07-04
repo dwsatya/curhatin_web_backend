@@ -1,0 +1,33 @@
+# Deployment for Flask Application (replace with your desired name)
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-flask-app
+spec:
+  replicas: 5  # Adjust as needed
+  selector:
+    matchLabels:
+      app: my-flask-app
+  template:
+    metadata:
+      labels:
+        app: my-flask-app
+    spec:
+      containers:
+      - name: my-flask-app
+        image: my-api-flask-app:latest
+        imagePullPolicy: Never
+        env:
+          - name: DB_HOST
+            value: "mysql-service"  # Service name for MySQL (internal DNS)
+          - name: DB_NAME
+            value: "db_library"  # Same database name as in MySQL deployment
+          - name: DB_USER
+            value: "root"  # Create a database user for your application
+          - name: DB_PASSWORD
+            value: "my-secret-pw"
+          - name: DB_POOLNAME
+            value: "db_library_pools"
+          - name: POOL_SIZE
+            value: "10"
+        # ... (rest of your Flask application container configuration)

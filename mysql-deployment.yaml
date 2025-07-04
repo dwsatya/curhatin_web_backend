@@ -1,0 +1,27 @@
+# Deployment for MySQL Database (replace with your desired name)
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+      - name: mysql
+        image: mysql:8.0  # Replace with desired MySQL version
+        env:
+          - name: MYSQL_ROOT_PASSWORD
+            value: "my-secret-pw"  # Replace with strong password (consider using Secrets)
+          - name: MYSQL_DATABASE
+            value: "db_library"  # Replace with desired database name
+        # Optional: Configure persistence for MySQL data (e.g., volumes)
+        # ... (volume mounts, volume claims, etc.)
+        ports:
+        - containerPort: 3306
