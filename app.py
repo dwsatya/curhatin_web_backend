@@ -21,8 +21,7 @@ load_dotenv()
 
 app = Flask(__name__)
 app.config.from_object(Config)
-CORS(app)
-
+CORS(app, supports_credentials=True, origins=["http://localhost:5173"])
 
 Swagger(app)
 
@@ -35,6 +34,8 @@ app.register_blueprint(protected_endpoints,url_prefix='/api/v1/protected')
 app.register_blueprint(books_endpoints, url_prefix='/api/v1/books')
 app.register_blueprint(static_file_server, url_prefix='/static/')
 app.register_blueprint(thread_endpoints, url_prefix="/api/v1")
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)

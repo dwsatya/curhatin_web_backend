@@ -1,9 +1,12 @@
 """Routes for module books"""
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, Flask
 from flask_jwt_extended import create_access_token, decode_token
 from flask_bcrypt import Bcrypt
 
 from helper.db_helper import get_connection
+
+app = Flask(__name__)
+
 
 bcrypt = Bcrypt()
 auth_endpoints = Blueprint('auth', __name__)
@@ -82,3 +85,18 @@ def register():
         }), 201
 
     return jsonify({"message": "Failed, can't register user"}), 501
+
+@auth_endpoints.route('/logout', methods=['POST', 'OPTIONS'])
+def logout():
+    if request.method == 'OPTIONS':
+        # CORS preflight response
+        response = jsonify({'message': 'CORS preflight'})
+        response.headers.add("Access-Control-Allow-Headers", "Content-Type,Authorization")
+        response.headers.add("Access-Control-Allow-Methods", "GET,POST,OPTIONS")
+        return response, 200
+
+    # Logout logic
+    response = jsonify({"msg": "Logout successful"})
+    return response, 200
+
+
