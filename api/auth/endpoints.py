@@ -36,9 +36,13 @@ def login():
         return jsonify({"msg": "Email or password is incorrect"}), 401
 
     access_token = create_access_token(
-    identity=str(user["id"]),  
-    additional_claims={"username": user["username"]}
-    )
+    identity=str(user["id"]),
+    additional_claims={
+        "username": user["username"],
+        "role": user["role"]
+    }
+)
+
 
     decoded_token = decode_token(access_token)
     expires = decoded_token['exp']
@@ -50,7 +54,8 @@ def login():
         "user": {
             "id": user["id"],
             "username": user["username"],
-            "email": user["email"]
+            "email": user["email"],
+            "role": user["role"]
         }
     }), 200
 

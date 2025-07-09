@@ -11,7 +11,9 @@ from config import Config
 from static.static_file_server import static_file_server
 from flasgger import Swagger
 from api.thread.endpoints import thread_endpoints
-
+from api.listeners.endpoints import listener_endpoints
+from api.events.endpoints import event_endpoints
+from api.users.endpoints import user_endpoints
 
 
 
@@ -35,6 +37,9 @@ app.register_blueprint(protected_endpoints,url_prefix='/api/v1/protected')
 app.register_blueprint(books_endpoints, url_prefix='/api/v1/books')
 app.register_blueprint(static_file_server, url_prefix='/static/')
 app.register_blueprint(thread_endpoints, url_prefix="/api/v1")
+app.register_blueprint(listener_endpoints, url_prefix="/api/v1")
+app.register_blueprint(event_endpoints, url_prefix='/api/v1')
+app.register_blueprint(user_endpoints, url_prefix='/api/v1')
 
 
 
